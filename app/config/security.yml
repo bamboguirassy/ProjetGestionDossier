@@ -1,0 +1,82 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+ 
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_USER: [ROLE_USER]
+ 
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+ 
+    firewalls:
+        dev:
+            pattern: ^/login$
+            anonymous: true
+        password_reset:
+            pattern: ^/resetting/*
+            anonymous: true
+        register:
+            pattern: ^/register/*
+            anonymous: true
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: security.csrf.token_manager
+                default_target_path:  /
+                remember_me:          true
+            remember_me:
+                key:        %secret% 
+                # %secret% est un paramètre de parameters.yml
+                lifetime:   80600
+                path:       /
+
+            logout:       true
+            anonymous:    false
+
+    access_denied_url: /
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/message/*, role: ROLE_USER }
+
+
+
+
+
+
+
+
+
+
+#
+## To get started with security, check out the documentation:
+## http://symfony.com/doc/current/book/security.html
+#security:
+#
+#    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+#    providers:
+#        in_memory:
+#            memory: ~
+#
+#    firewalls:
+#        # disables authentication for assets and the profiler, adapt it according to your needs
+#        dev:
+#            pattern: ^/(_(profiler|wdt)|css|images|js)/
+#            security: false
+#
+#        main:
+#            anonymous: ~
+#            # activate different ways to authenticate
+#
+#            # http_basic: ~
+#            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+#
+#            # form_login: ~
+#            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
