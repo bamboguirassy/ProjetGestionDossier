@@ -22,6 +22,27 @@ class Commentaire
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="contenu", type="text", length=65535, nullable=false)
+     */
+    private $contenu;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="piece_jointe", type="blob", length=65535, nullable=true)
+     */
+    private $pieceJointe;
+
+    /**
      * @var \Dossier
      *
      * @ORM\ManyToOne(targetEntity="Dossier")
@@ -51,6 +72,75 @@ class Commentaire
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set contenu
+     *
+     * @param string $contenu
+     * @return Commentaire
+     */
+    public function setContenu($contenu)
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    /**
+     * Get contenu
+     *
+     * @return string 
+     */
+    public function getContenu()
+    {
+        return $this->contenu;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Commentaire
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set pieceJointe
+     *
+     * @param string $pieceJointe
+     * @return Commentaire
+     */
+    public function setPieceJointe($pieceJointe)
+    {
+        $this->pieceJointe = $pieceJointe;
+
+        return $this;
+    }
+
+    /**
+     * Get pieceJointe
+     *
+     * @return string 
+     */
+    public function getPieceJointe()
+    {
+        return $this->pieceJointe;
     }
 
     /**

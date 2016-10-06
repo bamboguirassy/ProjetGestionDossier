@@ -36,6 +36,9 @@
                     </th>
 
                                                                 <th>Id</th>
+                                                                                                <th>Contenu</th>
+                                                                                                <th>Date</th>
+                                                                                                <th>Piecejointe</th>
                                                     
                     <th></th>
                 </tr>
@@ -51,6 +54,12 @@
                     </td>
                                         
                         <td><a href="{{ path('commentaire_show', { 'id': commentaire.id }) }}">{{ commentaire.id }}</a></td>
+                                                                
+                        <td>{{ commentaire.contenu }}</td>
+                                                                
+                        <td>{% if commentaire.date %}{{ commentaire.date|date('d/m/Y H:i:s') }}{% endif %}</td>
+                                                                
+                        <td>{{ commentaire.pieceJointe }}</td>
                                             
                     <td>
                         <div class="hidden-sm hidden-xs action-buttons">                            

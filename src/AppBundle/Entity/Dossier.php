@@ -272,4 +272,8 @@ class Dossier
     {
         return $this->utilisateurDerniereModification;
     }
+    
+    public function __toString() {
+        return $this->libelle;
+    }
 }

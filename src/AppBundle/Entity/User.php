@@ -203,7 +203,7 @@ class User extends BaseUser implements \FOS\MessageBundle\Model\ParticipantInter
     }
 
     public function __toString() {
-        return $this->prenom . ' ' . $this->nom;
+        return $this->username;
     }
 
 

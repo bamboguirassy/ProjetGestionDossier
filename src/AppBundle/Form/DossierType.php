@@ -16,11 +16,23 @@ class DossierType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('degreImportance')
+            ->add('degreImportance','choice',array(
+                'choices'=>array(
+                    'Modéré'=>'Modéré',
+                    'Important'=>'Important',
+                    'Urgent'=>'Urgent',
+                )
+            ))
             ->add('dateDebutTraitement', 'datetime')
             ->add('dateFinTraitementPrevu', 'datetime')
             ->add('dureeMaximumTraitement')
-            ->add('etat')
+            ->add('etat','choice',array(
+                'choices'=>array(
+                    'En Cours'=>'En Cours',
+                    'Suspendu'=>'Suspendu',
+                    'Terminé'=>'Terminé',
+                )
+            ))
             ->add('dateDerniereModification', 'datetime')
             ->add('utilisateurDerniereModification')
         ;

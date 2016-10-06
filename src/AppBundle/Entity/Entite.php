@@ -212,4 +212,8 @@ class Entite
     {
         return $this->email;
     }
+    
+    public function __toString() {
+        return $this->nom;
+    }
 }

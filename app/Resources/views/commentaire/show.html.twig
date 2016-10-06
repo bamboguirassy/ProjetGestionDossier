@@ -62,6 +62,18 @@
                             <tr>
                                 <th>Id</th>
                                 <td>{{ commentaire.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Contenu</th>
+                                <td>{{ commentaire.contenu }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td>{% if commentaire.date %}{{ commentaire.date|date('d/m/Y H:i:s') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Piecejointe</th>
+                                <td>{{ commentaire.pieceJointe }}</td>
                             </tr>                        </tbody>
                     </table>
                 </div>

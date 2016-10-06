@@ -1,119 +1,445 @@
-    {% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-    {% block  breadcrumb %}
+{% block  breadcrumb %}
     <li>
         <a href='{{ path('dossier_index') }}'>Revenir à la liste</a>
     </li>
     <li class="active">Affichage de Dossier</li>
-        {% endblock %}
+    {% endblock %}
 
-    
-    {% block  page_header %}
+
+{% block  page_header %}
     Formulaire
     <small>
         <i class="ace-icon fa fa-angle-double-right"></i>
         Affichage de Dossier
     </small>
-    {% endblock %}
+{% endblock %}
 
-    {% block body %}
+{% block body %}
 
 
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 widget-container-col">
-        <div class="widget-box widget-color-blue">
-            <div class="widget-header">
-                <h5 class="widget-title bigger lighter text-center">
-                    <i class="ace-icon fa fa-table"></i>
-                    Informations sur Dossier 
-                </h5>
+    <div>
+        <div id="user-profile-1" class="user-profile row">
+            <div class="col-xs-12 col-sm-3 center">
+                <div>
+                    <span class="profile-picture">
+                        <i class="fa fa-5x fa-folder-open"></i>
+                    </span>
 
-                <div class="widget-toolbar widget-toolbar-light no-border">
-                    <select id="simple-colorpicker-1" class="hide">
-                        <option selected="" data-class="blue" value="#307ECC">#307ECC</option>
-                        <option data-class="blue2" value="#5090C1">#5090C1</option>
-                        <option data-class="blue3" value="#6379AA">#6379AA</option>
-                        <option data-class="green" value="#82AF6F">#82AF6F</option>
-                        <option data-class="green2" value="#2E8965">#2E8965</option>
-                        <option data-class="green3" value="#5FBC47">#5FBC47</option>
-                        <option data-class="red" value="#E2755F">#E2755F</option>
-                        <option data-class="red2" value="#E04141">#E04141</option>
-                        <option data-class="red3" value="#D15B47">#D15B47</option>
-                        <option data-class="orange" value="#FFC657">#FFC657</option>
-                        <option data-class="purple" value="#7E6EB0">#7E6EB0</option>
-                        <option data-class="pink" value="#CE6F9E">#CE6F9E</option>
-                        <option data-class="dark" value="#404040">#404040</option>
-                        <option data-class="grey" value="#848484">#848484</option>
-                        <option data-class="default" value="#EEE">#EEE</option>
-                    </select>
+                    <div class="space-4"></div>
+
+                    <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+                        <div class="inline position-relative">
+                            <a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+                                <i class="ace-icon fa fa-circle light-green"></i>
+                                &nbsp;
+                                <span class="white">Dossier n°{{ dossier.id }}</span>
+                            </a>
+
+                            <ul class="align-left dropdown-menu dropdown-caret dropdown-lighter">
+                                <li class="dropdown-header"> Change Status </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ace-icon fa fa-circle green"></i>
+                                        &nbsp;
+                                        <span class="green">Available</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ace-icon fa fa-circle red"></i>
+                                        &nbsp;
+                                        <span class="red">Busy</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <i class="ace-icon fa fa-circle grey"></i>
+                                        &nbsp;
+                                        <span class="grey">Invisible</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="space-6"></div>
+
+                <div class="profile-contact-info">
+                    <div class="profile-contact-links align-left">
+                        <a href="#modal-traitement"  role="button" class="btn btn-link" data-toggle="modal">
+                            <i class="ace-icon fa fa-plus-circle bigger-120 green"></i>
+                            Assigner le dossier
+                        </a>
+
+                        <a href="#modal-modification-dossier"  role="button" class="btn btn-link" data-toggle="modal">
+                            <i class="ace-icon fa fa-edit bigger-120 orange"></i>
+                            modifier dossier
+                        </a>
+
+                        <a href="#modal-suppression-dossier"  role="button" class="btn btn-link" data-toggle="modal">
+                            <i class="ace-icon fa fa-trash bigger-125 red"></i>
+                            Supprimer Dossier
+                        </a>
+                    </div>
+
+                    <div class="space-6"></div>
+
+                    <div class="profile-social-links align-center">
+                        <a href="#" class="tooltip-info" title="" data-original-title="Visit my Facebook">
+                            <i class="middle ace-icon fa fa-facebook-square fa-2x blue"></i>
+                        </a>
+
+                        <a href="#" class="tooltip-info" title="" data-original-title="Visit my Twitter">
+                            <i class="middle ace-icon fa fa-twitter-square fa-2x light-blue"></i>
+                        </a>
+
+                        <a href="#" class="tooltip-error" title="" data-original-title="Visit my Pinterest">
+                            <i class="middle ace-icon fa fa-pinterest-square fa-2x red"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hr hr12 dotted"></div>
+
+                <div class="clearfix">
+                    <div class="grid2">
+                        <span class="bigger-175 blue">25</span>
+
+                        <br />
+                        Followers
+                    </div>
+
+                    <div class="grid2">
+                        <span class="bigger-175 blue">12</span>
+
+                        <br />
+                        Following
+                    </div>
+                </div>
+
+                <div class="hr hr16 dotted"></div>
             </div>
 
-            <div class="widget-body">
-                <div class="widget-main no-padding">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead class="thin-border-bottom">
-                            <tr>
-                                <th colspan="2">
+            <div class="col-xs-12 col-sm-9">
+                <div class="center">
+                    <span class="btn btn-app btn-sm btn-light no-hover">
+                        <span class="line-height-1 bigger-170 blue"> 1,411 </span>
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>Id</th>
-                                <td>{{ dossier.id }}</td>
-                            </tr>
-                            <tr>
-                                <th>Libelle</th>
-                                <td>{{ dossier.libelle }}</td>
-                            </tr>
-                            <tr>
-                                <th>Degreimportance</th>
-                                <td>{{ dossier.degreImportance }}</td>
-                            </tr>
-                            <tr>
-                                <th>Datedebuttraitement</th>
-                                <td>{% if dossier.dateDebutTraitement %}{{ dossier.dateDebutTraitement|date('d/m/Y H:i:s') }}{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Datefintraitementprevu</th>
-                                <td>{% if dossier.dateFinTraitementPrevu %}{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Dureemaximumtraitement</th>
-                                <td>{{ dossier.dureeMaximumTraitement }}</td>
-                            </tr>
-                            <tr>
-                                <th>Etat</th>
-                                <td>{{ dossier.etat }}</td>
-                            </tr>
-                            <tr>
-                                <th>Datedernieremodification</th>
-                                <td>{% if dossier.dateDerniereModification %}{{ dossier.dateDerniereModification|date('d/m/Y H:i:s') }}{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Utilisateurdernieremodification</th>
-                                <td>{{ dossier.utilisateurDerniereModification }}</td>
-                            </tr>                        </tbody>
-                    </table>
+                        <br />
+                        <span class="line-height-1 smaller-90"> Views </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-yellow no-hover">
+                        <span class="line-height-1 bigger-170"> 32 </span>
+
+                        <br />
+                        <span class="line-height-1 smaller-90"> Followers </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-pink no-hover">
+                        <span class="line-height-1 bigger-170"> 4 </span>
+
+                        <br />
+                        <span class="line-height-1 smaller-90"> Projects </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-grey no-hover">
+                        <span class="line-height-1 bigger-170"> 23 </span>
+
+                        <br />
+                        <span class="line-height-1 smaller-90"> Reviews </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-success no-hover">
+                        <span class="line-height-1 bigger-170"> 7 </span>
+
+                        <br />
+                        <span class="line-height-1 smaller-90"> Albums </span>
+                    </span>
+
+                    <span class="btn btn-app btn-sm btn-primary no-hover">
+                        <span class="line-height-1 bigger-170"> 55 </span>
+
+                        <br />
+                        <span class="line-height-1 smaller-90"> Contacts </span>
+                    </span>
+                </div>
+
+                <div class="space-12"></div>
+
+                <div class="profile-user-info profile-user-info-striped">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Libelle </div>
+
+                        <div class="profile-info-value">
+                            <span class="editable" id="username">{{ dossier.libelle }}</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Importance </div>
+
+                        <div class="profile-info-value">
+                            <i class="fa fa-map-marker light-orange bigger-110"></i>
+                            <span class="editable">{{ dossier.degreImportance }}</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Date Mise en réseau </div>
+
+                        <div class="profile-info-value">
+                            <span class="editable" id="age">{{ dossier.dateDebutTraitement|date('d/m/Y H:i:s') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Clôture Prévue </div>
+
+                        <div class="profile-info-value">
+                            <span class="editable" id="signup">{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name">Dernière modification </div>
+
+                        <div class="profile-info-value">
+                            <span class="editable" id="login">[utilisateur] {{ dossier.utilisateurDerniereModification }}</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Etat dossier </div>
+
+                        <div class="profile-info-value">
+                            {% if dossier.etat=='En Cours' %}
+                                <span class="label label-warning">{{ dossier.etat }}</span>
+                            {% elseif dossier.etat=='Suspendu' %}
+                                <span class="label label-danger">{{ dossier.etat }}</span>
+                            {% else %} 
+                                <span class="label label-success">{{ dossier.etat }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-20"></div>
+
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-small">
+                        <h4 class="widget-title blue smaller">
+                            <i class="ace-icon fa fa-rss orange"></i>
+                            Derniers Commentaires ...
+                        </h4>
+
+                        <div class="widget-toolbar action-buttons">
+                            <a href="#" data-action="reload">
+                                <i class="ace-icon fa fa-refresh blue"></i>
+                            </a>
+                            &nbsp;
+                            <a href="#" class="pink">
+                                <i class="ace-icon fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-8">
+                            <div id="profile-feed-1" class="profile-feed">
+                                <div class="profile-activity clearfix">
+                                    <div>
+                                        <img class="pull-left" alt="Alex Doe's avatar" src="{{ asset('assets/avatars/avatar5.png') }}" />
+                                        <a class="user" href="#"> Alex Doe </a>
+                                        changed his profile photo.
+                                        <a href="#">Take a look</a>
+
+                                        <div class="time">
+                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                            an hour ago
+                                        </div>
+                                    </div>
+
+
+                                    <div class="tools action-buttons">
+                                        <a href="#" class="blue">
+                                            <i class="ace-icon fa fa-pencil bigger-125"></i>
+                                        </a>
+
+                                        <a href="#" class="red">
+                                            <i class="ace-icon fa fa-times bigger-125"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hr hr2 hr-double"></div>
+
+                <div class="space-6"></div>
+
+                <div class="center">
+                    <a href="#modal-commentaire" role="button"  data-toggle="modal"  class="btn btn-sm btn-primary btn-white btn-round">
+                        <i  class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+                        <span class="bigger-110">
+                            Assigner le dossier
+                        </span>
+
+                        <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-        </div>
-    </div><!-- /.span -->
-
-
-        <div class="clearfix form-actions">
-    <div class="col-md-offset-3 col-md-9">
-        &nbsp; &nbsp; &nbsp;
-        <a class="btn btn-warning tooltip-warning" data-rel="tooltip" data-placement="top"  type="button" href="{{ path('dossier_edit', { 'id': dossier.id }) }}" title="Modifier dossier">
-            <i class="ace-icon fa fa-edit bigger-110"></i> modifier</a>
-        <div class="pull-left col-sm-3">
-            {{ form_start(delete_form) }}
-            <button class="btn btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="Supprimer dossier">
-                <i class="ace-icon fa fa-trash bigger-110"></i>
-                Supprimer
-            </button>
-            {{ form_end(delete_form) }}
         </div>
     </div>
-</div>{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+    {#    les modals#}
+    {#    modal ajout traitement utilisateur#}
+    <div id="modal-traitement" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Assignation du dossier à un utilisateur
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+
+    {#    modal modification dossier #}
+    <div id="modal-modification-dossier" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        modification du dossier
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+    {#    modal suppression dossier #}
+    <div id="modal-suppression-dossier" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Suppression du dossier
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+                    <div class="col-md-10 col-md-offset-1 h5">
+                        Êtes-vous sûr de vouloir supprimer ce dossier ? <br>
+                        Rassurez-vous que la suppression entrainera celle de toutes les informations relatives. <br>
+                        Continuer ?
+                    </div>
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                    <div class="pull-right col-sm-3">
+                        {{ form_start(delete_form) }}
+                        <button class="btn btn-sm btn-danger tooltip-error" data-rel="tooltip" data-placement="top"  title="Supprimer dossier">
+                            <i class="ace-icon fa fa-trash bigger-110"></i>
+                            Supprimer
+                        </button>
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+
+    {#    modal commentaire dossier #}
+    <div id="modal-commentaire" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                        Ajouter Commentaire
+                    </div>
+                </div>
+
+                <div class="modal-body no-padding">
+
+
+
+                </div>
+
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Close
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- PAGE CONTENT ENDS -->
+
+{% endblock %}
