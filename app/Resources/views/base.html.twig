@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr"> 
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title> Dossier Follower</title>
+        <title>Gestion de dossier</title>
 
         <meta name="description" content="Static &amp; Dynamic Tables" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -73,7 +73,7 @@
                     <a href="{{ path('homepage') }}" class="navbar-brand">
                         <small>
                             <i class="fa fa-leaf"></i>
-                            Dossier Follower
+                            Gestion de dossier
                         </small>
                     </a>
                 </div>
@@ -89,7 +89,7 @@
                             <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                                 <li class="dropdown-header">
                                     <i class="ace-icon fa fa-check"></i>
-                                    4 Tasks to complete
+                                    4 Tâches à completer
                                 </li>
 
                                 <li class="dropdown-content">
@@ -204,7 +204,7 @@
                                 <img class="nav-user-photo" src="{{ asset('assets/avatars/user.jpg') }}" alt="Jason's Photo" />
                                 <span class="user-info">
                                     <small>BIENVENU,</small>
-                                    Moussa Fofana
+                                    Salimata 
                                 </span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
@@ -290,11 +290,172 @@
                     <li class="">
                         <a href="{{ path('homepage') }}">
                             <i class="menu-icon fa fa-tachometer"></i>
-                            <span class="menu-text"> Accueil </span>
+                            <span class="menu-text">Tableau de bord</span>
                         </a>
 
                         <b class="arrow"></b>
                     </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-desktop"></i>
+                            <span class="menu-text">
+                                Paramétrage
+                            </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-users"></i>
+
+                                    Gestion utilisateurs
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </a>
+
+                                <b class="arrow"></b>
+
+                                <ul class="submenu">
+                                    <li class="">
+                                        <a href="#">
+                                            <i class="menu-icon fa fa-leaf green"></i>
+                                            Item #1
+                                        </a>
+
+                                        <b class="arrow"></b>
+                                    </li>
+
+                                    <li class="">
+                                        <a href="#" class="dropdown-toggle">
+                                            <i class="menu-icon fa fa-pencil orange"></i>
+
+                                            Gestion groupes
+                                            <b class="arrow fa fa-angle-down"></b>
+                                        </a>
+
+                                        <b class="arrow"></b>
+
+                                        <ul class="submenu">
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="menu-icon fa fa-plus purple"></i>
+                                                    Ajouter groupe
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="menu-icon fa fa-eye pink"></i>
+                                                    Visualiser groupe
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" class="dropdown-toggle">
+                                            <i class="menu-icon fa fa-pencil orange"></i>
+
+                                            Gestion utilisateurs
+                                            <b class="arrow fa fa-angle-down"></b>
+                                        </a>
+
+                                        <b class="arrow"></b>
+
+                                        <ul class="submenu">
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="menu-icon fa fa-plus purple"></i>
+                                                    Ajouter utilisateur
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+
+                                            <li class="">
+                                                <a href="#">
+                                                    <i class="menu-icon fa fa-eye pink"></i>
+                                                    Visualiser Utilisateur
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-cloud"></i>
+
+                                    Directions
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </a>
+
+                                <b class="arrow"></b>
+
+                                <ul class="submenu">
+                                    <li class="">
+                                        <a href="{{('entite_new')}}">
+                                            <i class="menu-icon fa fa-plus purple"></i>
+                                            Ajouter direction
+                                        </a>
+
+                                        <b class="arrow"></b>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{path('entite_index')}}">
+                                            <i class="menu-icon fa fa-eye pink"></i>
+                                            Visualiser direction
+                                        </a>
+
+                                        <b class="arrow"></b>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-folder"></i>
+                            <span class="menu-text">
+                                Gestion dossiers
+                            </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                          <li class="">
+                                        <a href="{{path('dossier_new')}}">
+                                            <i class="menu-icon fa fa-plus purple"></i>
+                                            Ajouter dossier
+                                        </a>
+
+                                        <b class="arrow"></b>
+                                    </li>
+                                    <li class="">
+                                        <a href="{{path('dossier_index')}}">
+                                            <i class="menu-icon fa fa-eye pink"></i>
+                                            Visualiser dossiers
+                                        </a>
+
+                                        <b class="arrow"></b>
+                                    </li>
+
+                               
+
 
                 </ul><!-- /.nav-list -->
 
