@@ -226,27 +226,4 @@ class Entite
     public function __toString() {
         return $this->nom;
     }
-
-    /**
-     * Set entite
-     *
-     * @param \AppBundle\Entity\Entite $entite
-     * @return Entite
-     */
-    public function setEntite(\AppBundle\Entity\Entite $entite = null)
-    {
-        $this->entite = $entite;
-
-        return $this;
-    }
-
-    /**
-     * Get entite
-     *
-     * @return \AppBundle\Entity\Entite 
-     */
-    public function getEntite()
-    {
-        return $this->entite;
-    }
 }

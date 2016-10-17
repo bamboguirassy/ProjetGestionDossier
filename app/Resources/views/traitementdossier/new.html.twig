@@ -1,62 +1,72 @@
-    {% extends 'base.html.twig' %}
-
-    {% block  breadcrumb %}
-    <li>
-        <a href='{{ path('traitementdossier_index') }}'>Revenir à la liste</a>
-    </li>
-    <li class="active">Formulaire de TraitementDossier</li>
-        {% endblock %}
-
-    {% block  page_header %}
-    Formulaire
-    <small>
-        <i class="ace-icon fa fa-angle-double-right"></i>
-        Création de TraitementDossier
-    </small>
-    {% endblock %}
-
-
-
-    {% block body %}
+   
     <div class="row">
         <div class="col-xs-12">
 
-            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form'}}) }}                                    
+            {{ form_start(traitementDossier_form,{'attr':{'class':'form-horizontal','role':'form','action':path('traitementdossier_new')}}) }}                                    
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.etat) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.etat) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.etat,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(traitementDossier_form.etat,{'attr':{'id':'form-field'}}) }}
+                        </span>
+                    </div>
+                </div>                        
+                <div class="form-group hidden">
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.dossier) }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            {{ form_widget(traitementDossier_form.dossier,{'attr':{'id':'form-field'}}) }}
+                        </span>
+                    </div>
+                </div>                        
+                <div class="form-group hidden">
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.user) }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            {{ form_widget(traitementDossier_form.user,{'attr':{'class':'select2'}}) }}
+                        </span>
+                    </div>
+                </div>                        
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.user) }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            <select id="traitement_dossier_user" name="traitement_dossier[user]" class="select2">
+                                <option value="" disabled="">Selectionner l'utilisateur</option>
+                                {% for user in users %}
+                                <option value="{{ user.id }}"> {{ user }} </option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
+                </div>                        
+
+                                    
+                <div class="form-group hidden">
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.dateDebut) }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            {{ form_widget(traitementDossier_form.dateDebut,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
 
                                     
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.dateDebut) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.dateFin) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.dateDebut,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(traitementDossier_form.dateFin,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
 
                                     
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.dateFin) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(traitementDossier_form.remarques) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.dateFin,{'attr':{'id':'form-field'}}) }}
-                        </span>
-                    </div>
-                </div>                        
-
-                                    
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.remarques) }}</label>
-                    <div class="col-sm-9">
-                        <span class="input-icon input-icon-right">
-                            {{ form_widget(form.remarques,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(traitementDossier_form.remarques,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
@@ -77,13 +87,9 @@
                     </div>
                 </div>
 
-                {{ form_end(form) }}
+                {{ form_end(traitementDossier_form) }}
 
             </div><!-- /.col -->
         </div><!-- /.row -->           
 
-                <div class="clearfix form-actions">
-    <div class="col-md-offset-3 col-md-9">
-    </div>
-</div>{% endblock %}
         

@@ -9,10 +9,10 @@
 
 
 {% block  page_header %}
-    Formulaire
+    Dossier
     <small>
         <i class="ace-icon fa fa-angle-double-right"></i>
-        Affichage de Dossier
+        {{ dossier }}
     </small>
 {% endblock %}
 
@@ -72,20 +72,24 @@
 
                 <div class="profile-contact-info">
                     <div class="profile-contact-links align-left">
-                        <a href="#modal-traitement"  role="button" class="btn btn-link" data-toggle="modal">
-                            <i class="ace-icon fa fa-plus-circle bigger-120 green"></i>
-                            Assigner le dossier
-                        </a>
-
-                        <a href="#modal-modification-dossier"  role="button" class="btn btn-link" data-toggle="modal">
-                            <i class="ace-icon fa fa-edit bigger-120 orange"></i>
-                            modifier dossier
-                        </a>
-
-                        <a href="#modal-suppression-dossier"  role="button" class="btn btn-link" data-toggle="modal">
-                            <i class="ace-icon fa fa-trash bigger-125 red"></i>
-                            Supprimer Dossier
-                        </a>
+                        {% if is_granted('ROLE_TRAITEMENTDOSSIER_A') and dossier.etat!='Terminé' %}
+                            <a href="#modal-traitement"  role="button" class="btn btn-link" data-toggle="modal">
+                                <i class="ace-icon fa fa-plus-circle bigger-120 green"></i>
+                                Assigner le dossier
+                            </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_DOSSIER_M') %}
+                            <a href="#modal-modification-dossier"  role="button" class="btn btn-link" data-toggle="modal">
+                                <i class="ace-icon fa fa-edit bigger-120 orange"></i>
+                                modifier dossier
+                            </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_DOSSIER_S') and dossier.etat!='Terminé' %}
+                            <a href="#modal-suppression-dossier"  role="button" class="btn btn-link" data-toggle="modal">
+                                <i class="ace-icon fa fa-trash bigger-125 red"></i>
+                                Supprimer Dossier
+                            </a>
+                        {% endif %}
                     </div>
 
                     <div class="space-6"></div>
@@ -173,61 +177,163 @@
 
                 <div class="space-12"></div>
 
+
+
+                <div class="col-sm-12">
+                    <div class="tabbable tabs-left">
+                        <ul class="nav nav-tabs" id="myTab3">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home3">
+                                    <i class="pink ace-icon fa fa-tachometer bigger-110"></i>
+                                    Accueil
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#profile3">
+                                    <i class="blue ace-icon fa fa-user bigger-110"></i>
+                                    Suivi Traitement
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown13">
+                                    <i class="ace-icon fa fa-rocket"></i>
+                                    Pièces Jointes
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="home3" class="tab-pane in active">
+                                <p>
+                                <table class="table table-striped table-bordered table-hover bg-info">
+                                    <tr>
+                                        <th>Libélle</th>
+                                        <td>{{ dossier.libelle }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Importance</th>
+                                        <td>{{ dossier.degreImportance }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date mise en réseau</th>
+                                        <td>{{ dossier.dateDebutTraitement|date('d/m/Y H:i:s') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Clôture prévue</th>
+                                        <td>{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Dernière Modification</th>
+                                        <td>[utilisateur] {{ dossier.utilisateurDerniereModification }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Etat Dossier</th>
+                                        <td> 
+                                            {% if dossier.etat=='En Cours' %}
+                                                <span class="label label-warning">{{ dossier.etat }}</span>
+                                            {% elseif dossier.etat=='Suspendu' %}
+                                                <span class="label label-danger">{{ dossier.etat }}</span>
+                                            {% else %} 
+                                                <span class="label label-success">{{ dossier.etat }}</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                                </p>
+                            </div>
+
+                            <div id="profile3" class="tab-pane">
+                                <p>
+                                <table class="table table-striped table-bordered table-hover bg-info">
+                                    <thead>
+                                        <tr>
+                                            <th>Utilisateur</th>
+                                            <th>Etat</th>
+                                            <th>Datedebut</th>
+                                            <th>Datefin</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for traitementDossier in traitementDossiers %}
+                                            <tr>
+
+                                                <td>{{ traitementDossier.user }}</td>
+
+                                                <td>
+                                            {% if traitementDossier.etat=='En Cours' %}
+                                                <span class="label label-warning">{{ traitementDossier.etat }}</span>
+                                            {% elseif traitementDossier.etat=='Suspendu' %}
+                                                <span class="label label-danger">{{ traitementDossier.etat }}</span>
+                                            {% else %} 
+                                                <span class="label label-success">{{ traitementDossier.etat }}</span>
+                                            {% endif %}
+                                        </td>
+
+                                                <td>{% if traitementDossier.dateDebut %}{{ traitementDossier.dateDebut|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                                                <td>{% if traitementDossier.dateFin %}{{ traitementDossier.dateFin|date('d/m/Y H:i:s') }}{% endif %}</td>
+
+                                                <td>
+                                                    <div class="hidden-sm hidden-xs action-buttons">
+                                                        {% if is_granted('ROLE_TRAITEMENTDOSSIER_V') %}
+                                                            <a class="blue" href="{{ path('traitementdossier_show', { 'id': traitementDossier.id }) }}">
+                                                                <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                        {% if is_granted('ROLE_TRAITEMENTDOSSIER_V') and traitementDossier.user==app.user and (dossier.etat!='Terminé' or dossier.etat!='Suspendu') %}
+                                                            <a class="green" href="{{ path('traitementdossier_edit', { 'id': traitementDossier.id }) }}">
+                                                                <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="hidden-md hidden-lg">
+                                                        <div class="inline pos-rel">
+                                                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
+                                                                    {% if is_granted('ROLE_TRAITEMENTDOSSIER_V') %}      
+                                                                        <a href="{{ path('traitementdossier_show', { 'id': traitementDossier.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir traitementdossier">
+                                                                            <span class="blue">
+                                                                                <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                            </span>   
+                                                                        </a>
+                                                                    </li>  
+                                                                {% endif %}
+                                                                {% if is_granted('ROLE_TRAITEMENTDOSSIER_V') and traitementDossier.user==app.user %}
+                                                                    <li>
+                                                                        <a href="{{ path('traitementdossier_edit', { 'id': traitementDossier.id }) }}" class="tooltip-success" data-rel="tooltip"  title="Modifier traitementdossier">
+                                                                            <span class="green">
+                                                                                <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                            </span>
+                                                                        </a>
+                                                                    </li> *
+                                                                {% endif %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                </p>
+                            </div>
+
+                            <div id="dropdown13" class="tab-pane">
+                                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col -->
+
+
                 <div class="profile-user-info profile-user-info-striped">
-                    <div class="profile-info-row">
-                        <div class="profile-info-name"> Libelle </div>
 
-                        <div class="profile-info-value">
-                            <span class="editable" id="username">{{ dossier.libelle }}</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-info-row">
-                        <div class="profile-info-name"> Importance </div>
-
-                        <div class="profile-info-value">
-                            <i class="fa fa-map-marker light-orange bigger-110"></i>
-                            <span class="editable">{{ dossier.degreImportance }}</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-info-row">
-                        <div class="profile-info-name"> Date Mise en réseau </div>
-
-                        <div class="profile-info-value">
-                            <span class="editable" id="age">{{ dossier.dateDebutTraitement|date('d/m/Y H:i:s') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-info-row">
-                        <div class="profile-info-name"> Clôture Prévue </div>
-
-                        <div class="profile-info-value">
-                            <span class="editable" id="signup">{{ dossier.dateFinTraitementPrevu|date('d/m/Y H:i:s') }}</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-info-row">
-                        <div class="profile-info-name">Dernière modification </div>
-
-                        <div class="profile-info-value">
-                            <span class="editable" id="login">[utilisateur] {{ dossier.utilisateurDerniereModification }}</span>
-                        </div>
-                    </div>
-
-                    <div class="profile-info-row">
-                        <div class="profile-info-name"> Etat dossier </div>
-
-                        <div class="profile-info-value">
-                            {% if dossier.etat=='En Cours' %}
-                                <span class="label label-warning">{{ dossier.etat }}</span>
-                            {% elseif dossier.etat=='Suspendu' %}
-                                <span class="label label-danger">{{ dossier.etat }}</span>
-                            {% else %} 
-                                <span class="label label-success">{{ dossier.etat }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
                 </div>
 
                 <div class="space-20"></div>
@@ -253,31 +359,36 @@
                     <div class="widget-body">
                         <div class="widget-main padding-8">
                             <div id="profile-feed-1" class="profile-feed">
-                                <div class="profile-activity clearfix">
-                                    <div>
-                                        <img class="pull-left" alt="Alex Doe's avatar" src="{{ asset('assets/avatars/avatar5.png') }}" />
-                                        <a class="user" href="#"> Alex Doe </a>
-                                        changed his profile photo.
-                                        <a href="#">Take a look</a>
+                                {% for commentaire in commentaires %}
+                                    <div class="profile-activity clearfix">
+                                        <div>
+                                            <img class="{% if commentaire.user==app.user %} pull-left {% else %} pull-right {% endif %}" alt="Alex Doe's avatar" src="{{ asset('assets/avatars/avatar5.png') }}" />
+                                            <a class="user" href="#"> {{ commentaire.user }} </a><br>
+                                            {{ commentaire.contenu }}
+                                            {% if commentaire.pieceJointe %}
+                                                <a href="#"><i class="fa fa-file-archive-o"></i></a>
+                                                {% endif %}
 
-                                        <div class="time">
-                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                            an hour ago
+                                            <div class="time">
+                                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                                {{ commentaire.date|date('à H:i:s, d/m/Y') }}
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tools action-buttons">
+                                            <a href="#" class="blue">
+                                                <i class="ace-icon fa fa-pencil bigger-125"></i>
+                                            </a>
+
+                                            <a href="#" class="red">
+                                                <i class="ace-icon fa fa-times bigger-125"></i>
+                                            </a>
                                         </div>
                                     </div>
-
-
-                                    <div class="tools action-buttons">
-                                        <a href="#" class="blue">
-                                            <i class="ace-icon fa fa-pencil bigger-125"></i>
-                                        </a>
-
-                                        <a href="#" class="red">
-                                            <i class="ace-icon fa fa-times bigger-125"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
+                                {% else %}
+                                    Aucun commentaire pour le moment
+                                {% endfor %}
 
                             </div>
                         </div>
@@ -292,7 +403,7 @@
                     <a href="#modal-commentaire" role="button"  data-toggle="modal"  class="btn btn-sm btn-primary btn-white btn-round">
                         <i  class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
                         <span class="bigger-110">
-                            Assigner le dossier
+                            Nouveau commentaire
                         </span>
 
                         <i class="icon-on-right ace-icon fa fa-arrow-right"></i>
@@ -329,7 +440,7 @@
 
                 <div class="modal-body no-padding">
 
-
+                    {% include 'traitementdossier/new.html.twig' %}
 
                 </div>
 
@@ -359,7 +470,7 @@
 
                 <div class="modal-body no-padding">
 
-
+                    {% include 'dossier/edit.html.twig' %}
 
                 </div>
 
@@ -428,7 +539,7 @@
 
                 <div class="modal-body no-padding">
 
-
+                    {% include 'commentaire/new.html.twig' %}
 
                 </div>
 

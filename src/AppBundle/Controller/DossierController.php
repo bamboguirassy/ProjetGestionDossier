@@ -25,7 +25,12 @@ class DossierController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $dossiers = $em->getRepository('AppBundle:Dossier')->findAll();
+
+        $dossiers = $em->createQuery('select d from AppBundle:Dossier d, AppBundle:TraitementDossier td '
+                        . 'where td.dossier=d and td.user=?1 ')
+                ->setParameter(1, $this->getUser())
+                ->getResult();
+
 
         return $this->render('dossier/index.html.twig', array(
                     'dossiers' => $dossiers,
@@ -50,6 +55,14 @@ class DossierController extends Controller {
             $dossier->setDateDerniereModification(new \DateTime());
             $em = $this->getDoctrine()->getManager();
             $em->persist($dossier);
+            $traitementDossier = new \AppBundle\Entity\TraitementDossier();
+            $traitementDossier->setDateDebut(new \DateTime());
+            $traitementDossier->setDateFin(new \DateTime());
+            $traitementDossier->setDossier($dossier);
+            $traitementDossier->setEtat('En Cours');
+            $traitementDossier->setUser($this->getUser());
+            $traitementDossier->setRemarques('Ce dossier a été assigné automatiquement lors de sa création');
+            $em->persist($traitementDossier);
             $em->flush();
             $request->getSession()->getFlashBag()
                     ->set('success', 'Ajout effectué avec succés');
@@ -71,10 +84,41 @@ class DossierController extends Controller {
      */
     public function showAction(Dossier $dossier) {
         $deleteForm = $this->createDeleteForm($dossier);
+        $traitementDossier = new \AppBundle\Entity\TraitementDossier();
+        $traitementDossier->setDossier($dossier);
+        $traitementDossier->setDateDebut(new \DateTime());
+        $traitementDossier->setDateFin(new \DateTime());
+        $traitementDossier_form = $this->createForm('AppBundle\Form\TraitementDossierType', $traitementDossier);
+        $editForm = $this->createForm('AppBundle\Form\DossierType', $dossier);
+        $commentaire = new \AppBundle\Entity\Commentaire();
+        $commentaire->setDossier($dossier);
+        $commentaire->setUser($this->getUser());
+        $commentaire->setDate(new \DateTime());
+        $commentaire_form = $this->createForm('AppBundle\Form\CommentaireType', $commentaire);
+        $em = $this->getDoctrine()->getManager();
+        $commentaires = $em->createQuery('select c from AppBundle:Commentaire c '
+                        . 'where c.dossier=?1 order by c.date DESC')
+                ->setParameter(1, $dossier)
+                ->getResult();
+        $traitementDossiers = $em->createQuery('select t from AppBundle:TraitementDossier t where t.dossier=?1 '
+                        . ' order by t.dateDebut DESC ')
+                ->setParameter(1, $dossier)
+                ->getResult();
+        $users = $em->createQuery('select u from AppBundle:User u, AppBundle:UserEntite ue where ue.user=u and ue.entite in '
+                        . '(select e from AppBundle:Entite e,AppBundle:UserEntite ue1 '
+                        . 'where ue1.entite=e and ue1.user=?1) ')
+                ->setParameter(1, $this->getUser())
+                ->getResult();
 
         return $this->render('dossier/show.html.twig', array(
                     'dossier' => $dossier,
                     'delete_form' => $deleteForm->createView(),
+                    'edit_form' => $editForm->createView(),
+                    'traitementDossier_form' => $traitementDossier_form->createView(),
+                    'commentaire_form' => $commentaire_form->createView(),
+                    'commentaires' => $commentaires,
+                    'traitementDossiers' => $traitementDossiers,
+                    'users' => $users,
         ));
     }
 
@@ -92,6 +136,27 @@ class DossierController extends Controller {
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($dossier);
+            $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
+                            . 'where td.user=u and td.dossier=?1 ')
+                    ->setParameter(1, $dossier)
+                    ->getResult();
+            foreach ($users_concernes as $users_concerne) {
+                if ($users_concerne != $this->getUser()) {
+                    $notification = new \AppBundle\Entity\Notification();
+                    $notification->setDate(new \DateTime());
+                    $notification->setUser($users_concerne);
+                    $notification->setLibelle('Modification du dossier ' . $dossier);
+                    $notification->setContenu("L'utilisateur " . $this->getUser() . " a apporté des modification sur le "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
+                            . "Son dégré d'importance est " . $dossier->getDegreImportance() . '. Afficher le dossier pour voir les modifications '
+                            . 'apportées. Nota Béné: Vous avez eu à travailler sur ce dossier, c\'est la raison pour laquelle vous êtes notifiés à chaque opération importante. ');
+                    $notification->setDossier($dossier);
+                    $notification->setSource($this->getUser());
+                    $notification->setEtat(0);
+                    $em->persist($notification);
+                }
+            }
+
             $em->flush();
             $request->getSession()->getFlashBag()
                     ->set('success', 'Modification effectuée avec succés');
@@ -119,6 +184,25 @@ class DossierController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($dossier);
+             $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
+                            . 'where td.user=u and td.dossier=?1 ')
+                    ->setParameter(1, $dossier)
+                    ->getResult();
+            foreach ($users_concernes as $users_concerne) {
+                if ($users_concerne != $this->getUser()) {
+                    $notification = new \AppBundle\Entity\Notification();
+                    $notification->setDate(new \DateTime());
+                    $notification->setUser($users_concerne);
+                    $notification->setLibelle('Suppression du dossier ' . $dossier);
+                    $notification->setContenu("L'utilisateur " . $this->getUser() . " a supprimé le "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom du dossier: " . $dossier . ". "
+                            . " Son dégré d'importance est " . $dossier->getDegreImportance() . '. Nous vous alertons parce que vous avez eu à travailler sur ce dossier. ');
+                    $notification->setDossier($dossier);
+                    $notification->setSource($this->getUser());
+                    $notification->setEtat(0);
+                    $em->persist($notification);
+                }
+            }
             $em->flush();
             $request->getSession()->getFlashBag()
                     ->set('dangers', 'Suppression reussie !!!');
@@ -139,6 +223,26 @@ class DossierController extends Controller {
         foreach ($selections as $id => $valeur) {
             $element = $em->getRepository('AppBundle:Dossier')->find($id);
             $em->remove($element);
+            $dossier=$element;
+             $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
+                            . 'where td.user=u and td.dossier=?1 ')
+                    ->setParameter(1, $element)
+                    ->getResult();
+            foreach ($users_concernes as $users_concerne) {
+                if ($users_concerne != $this->getUser()) {
+                    $notification = new \AppBundle\Entity\Notification();
+                    $notification->setDate(new \DateTime());
+                    $notification->setUser($users_concerne);
+                    $notification->setLibelle('Suppression du dossier ' . $dossier);
+                    $notification->setContenu("L'utilisateur " . $this->getUser() . " a supprimé le "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom du dossier: " . $dossier . ". "
+                            . " Son dégré d'importance est " . $dossier->getDegreImportance() . '. Nous vous alertons parce que vous avez eu à travailler sur ce dossier. ');
+                    $notification->setDossier($dossier);
+                    $notification->setSource($this->getUser());
+                    $notification->setEtat(0);
+                    $em->persist($notification);
+                }
+            }
         }
         $em->flush();
 

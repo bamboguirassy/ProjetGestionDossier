@@ -15,7 +15,14 @@ class TraitementDossierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('etat')
+            ->add('etat','choice',array(
+                'choices'=>array(
+                    'En Cours'=>'En Cours',
+                    'Suspendu'=>'Suspendu',
+                    'Terminé'=>'Terminé',
+                    
+                )
+            ))
             ->add('dateDebut', 'datetime')
             ->add('dateFin', 'datetime')
             ->add('remarques')

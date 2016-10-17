@@ -1,27 +1,10 @@
-{% extends 'base.html.twig' %}
-
-{% block  breadcrumb %}
-    <li>
-        <a href='{{ path('entite_index') }}'>Revenir à la liste</a>
-    </li>
-    <li class="active">Formulaire de Entite</li>
-    {% endblock %}
-
-{% block  page_header %}
-    Formulaire
-    <small>
-        <i class="ace-icon fa fa-angle-double-right"></i>
-        Création de Entite
-    </small>
-{% endblock %}
-
-
 
 {% block body %}
     <div class="row">
         <div class="col-xs-12">
 
-            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form','action':path('entite_new')}}) }}                                    
+            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form','action':path('entite_new')}}) }}     
+            <input type="number" name="source" value="1" hidden="">
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.nom) }}</label>
                 <div class="col-sm-9">
@@ -81,16 +64,11 @@
                 </div>
             </div>                        
 
-            <div class="form-group">
+            <div class="form-group hidden">
                 <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.entite) }}</label>
                 <div class="col-sm-9">
                     <span class="input-icon input-icon-right">
-                        <select id="entite_entite" name="entite[entite]" class="select2">
-                            <option value="" disabled="">Selectionner l'entité parente</option> 
-                            {% for entite in mes_entites %}
-                                <option value="{{entite.id}}">{{ entite }}</option> 
-                            {% endfor %}
-                        </select>
+                        {{ form_widget(form.entite,{'attr':{'class':'select2'}}) }}
                     </span>
                 </div>
             </div>                        

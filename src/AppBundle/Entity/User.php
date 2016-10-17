@@ -57,6 +57,34 @@ class User extends BaseUser implements \FOS\MessageBundle\Model\ParticipantInter
      */
     private $telephone;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\FosGroup")
+     * @ORM\JoinTable(name="fos_user_user_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
+
+    /**
+     * @var \FosGroup
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FosGroup")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idGroup", referencedColumnName="id")
+     * })
+     */
+    private $idgroup;
+
+    /**
+     * @var \Entite
+     *
+     * @ORM\ManyToOne(targetEntity="Entite")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="entite_id", referencedColumnName="id")
+     * })
+     */
+    private $entite;
 
     /**
      * @var string
@@ -179,7 +207,6 @@ class User extends BaseUser implements \FOS\MessageBundle\Model\ParticipantInter
         return $this->telephone;
     }
 
-
     /**
      * Set adresse
      *
@@ -203,8 +230,50 @@ class User extends BaseUser implements \FOS\MessageBundle\Model\ParticipantInter
     }
 
     public function __toString() {
-        return $this->username;
+        return $this->prenom . ' ' . $this->nom . ' - (' . $this->username . ')';
     }
 
+    /**
+     * Set idgroup
+     *
+     * @param \AppBundle\Entity\FosGroup $idgroup
+     *
+     * @return User
+     */
+    public function setIdgroup(\AppBundle\Entity\FosGroup $idgroup = null) {
+        $this->idgroup = $idgroup;
+
+        return $this;
+    }
+
+    /**
+     * Get idgroup
+     *
+     * @return \AppBundle\Entity\FosGroup
+     */
+    public function getIdgroup() {
+        return $this->idgroup;
+    }
+
+    /**
+     * Set entite
+     *
+     * @param \AppBundle\Entity\Entite $entite
+     * @return UserEntite
+     */
+    public function setEntite(\AppBundle\Entity\Entite $entite = null) {
+        $this->entite = $entite;
+
+        return $this;
+    }
+
+    /**
+     * Get entite
+     *
+     * @return \AppBundle\Entity\Entite 
+     */
+    public function getEntite() {
+        return $this->entite;
+    }
 
 }

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EntiteType extends AbstractType
+class UserType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,17 +15,23 @@ class EntiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('prenom')
             ->add('nom')
-            ->add('sigle')
+            ->add('datenaiss')
+            ->add('lieunaiss')
+            ->add('telephone')
             ->add('adresse')
-            ->add('numeroTelephone1')
-            ->add('numeroTelephone2')
-            ->add('email')
-            ->add('entite','entity',array(
-                'class'=>'AppBundle:Entite',
-                'empty_value'=>'Selectionner l\'entité parente',
+            ->add('enabled')
+            ->add('idgroup')
+            ->add('email','email')
+            ->add('plainPassword','password',array(
                 'required'=>FALSE,
             ))
+            ->add('username')
+            ->add('entite','entity',array(
+                'class'=>'AppBundle:Entite',
+                'label'=>'Entite principale'
+                ))
         ;
     }
     
@@ -35,7 +41,7 @@ class EntiteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Entite'
+            'data_class' => 'AppBundle\Entity\User'
         ));
     }
 }

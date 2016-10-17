@@ -17,7 +17,9 @@ class CommentaireType extends AbstractType
         $builder
             ->add('contenu')
             ->add('date', 'datetime')
-            ->add('pieceJointe')
+            ->add('pieceJointe','file',array(
+                'required'=>false,
+            ))
             ->add('dossier')
             ->add('user')
         ;
