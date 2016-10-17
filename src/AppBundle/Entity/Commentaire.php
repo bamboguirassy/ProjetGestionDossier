@@ -38,7 +38,7 @@ class Commentaire
     /**
      * @var string
      *
-     * @ORM\Column(name="piece_jointe", type="blob", length=65535, nullable=true)
+     * @ORM\Column(name="piece_jointe", type="string", length=255, nullable=true)
      */
     private $pieceJointe;
 
