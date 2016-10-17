@@ -46,6 +46,27 @@ class CommentaireController extends Controller {
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($commentaire);
+            $dossier=$commentaire->getDossier();
+            $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
+                            . 'where td.user=u and td.dossier=?1 ')
+                    ->setParameter(1, $dossier)
+                    ->getResult();
+            foreach ($users_concernes as $users_concerne) {
+                if ($users_concerne != $this->getUser()) {
+                    $notification = new \AppBundle\Entity\Notification();
+                    $notification->setDate(new \DateTime());
+                    $notification->setUser($users_concerne);
+                    $notification->setLibelle('Nouveau commentaire sur le dossier ' . $dossier);
+                    $notification->setContenu("L'utilisateur " . $this->getUser() . " a commenté le   "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
+                            . "Son dégré d'importance est " . $dossier->getDegreImportance() . ". Le contenu du commentaire est: " . $commentaire->getContenu()
+                            . "  Nota Béné: Vous avez eu à travailler sur ce dossier, c'est pourquoi nous vous alertons à chaque opération importante .");
+                    $notification->setDossier($dossier);
+                    $notification->setSource($this->getUser());
+                    $notification->setEtat(0);
+                    $em->persist($notification);
+                }
+            }
             $em->flush();
             $request->getSession()->getFlashBag()
                     ->set('success', 'Ajout effectué avec succés');

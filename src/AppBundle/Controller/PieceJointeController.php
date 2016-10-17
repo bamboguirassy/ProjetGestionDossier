@@ -57,7 +57,7 @@ class PieceJointeController extends Controller {
                     $notification->setUser($users_concerne);
                     $notification->setLibelle('Ajout de pièce jointe au dossier ' . $dossier);
                     $notification->setContenu("L'utilisateur " . $this->getUser() . " a ajouté une nouvelle pièce jointe au  "
-                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier->getDossier() . ". "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
                             . "Son dégré d'importance est " . $dossier->getDegreImportance() . ". La pièce jointe a pour libellé " . $pieceJointe->getLibelle()
                             . "  Nota Béné: Vous avez eu à travailler sur ce dossier, c'est pourquoi nous vous alertons à chaque opération importante .");
                     $notification->setDossier($dossier);
@@ -119,7 +119,7 @@ class PieceJointeController extends Controller {
                     $notification->setUser($users_concerne);
                     $notification->setLibelle('Modification de pièce jointe du dossier ' . $dossier);
                     $notification->setContenu("L'utilisateur " . $this->getUser() . " a modifié une pièce jointe associée au "
-                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier->getDossier() . ". "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
                             . "Son dégré d'importance est " . $dossier->getDegreImportance() . ". La pièce jointe a pour libellé " . $pieceJointe->getLibelle()
                             . ".  Nota Béné: Vous avez eu à travailler sur ce dossier, c'est pourquoi nous vous alertons à chaque opération importante .");
                     $notification->setDossier($dossier);
@@ -167,7 +167,7 @@ class PieceJointeController extends Controller {
                     $notification->setUser($users_concerne);
                     $notification->setLibelle('Suppression de pièce jointe du dossier ' . $dossier);
                     $notification->setContenu("L'utilisateur " . $this->getUser() . " a supprimé une pièce jointe associée au "
-                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier->getDossier() . ". "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
                             . "Son dégré d'importance est " . $dossier->getDegreImportance() . ". La pièce jointe a pour libellé " . $pieceJointe->getLibelle()
                             . ".  Nota Béné: Vous avez eu à travailler sur ce dossier, c'est pourquoi nous vous alertons à chaque opération importante .");
                     $notification->setDossier($dossier);
@@ -207,7 +207,7 @@ class PieceJointeController extends Controller {
                     $notification->setUser($users_concerne);
                     $notification->setLibelle('Suppression de pièce jointe du dossier ' . $dossier);
                     $notification->setContenu("L'utilisateur " . $this->getUser() . " a supprimé une pièce jointe associée au "
-                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier->getDossier() . ". "
+                            . " dossier n° " . $dossier->getId() . ". ayant pour nom de dossier: " . $dossier . ". "
                             . "Son dégré d'importance est " . $dossier->getDegreImportance() . ". La pièce jointe a pour libellé " . $element->getLibelle()
                             . ".  Nota Béné: Vous avez eu à travailler sur ce dossier, c'est pourquoi nous vous alertons à chaque opération importante .");
                     $notification->setDossier($dossier);
