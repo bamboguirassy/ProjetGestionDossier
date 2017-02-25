@@ -100,7 +100,15 @@ security:
         - { path: ^/userentite/[0-9]+/edit$, role: ROLE_USERENTITE_M }
         - { path: ^/userentite/[0-9]+/del$, role: ROLE_USERENTITE_S }
 
+        - { path: ^/piecejointe/new$, role: ROLE_USERENTITE_A } 
+        - { path: ^/piecejointe/$, role: ROLE_PIECEJOINTE_L }
+        - { path: ^/piecejointe/[0-9]+$, role: ROLE_PIECEJOINTE_V , methods: [GET] }
+        - { path: ^/piecejointe/[0-9]+/edit$, role: ROLE_PIECEJOINTE_M }
+        - { path: ^/piecejointe/supprimerpj$, role: ROLE_PIECEJOINTE_S , methods: [POST]  }
+        - { path: ^/piecejointe/deleteSelection$, role: ROLE_PIECEJOINTE_S , methods: [POST]  }
+        - { path: ^/piecejointe/download/[0-9]+$, role: ROLE_PIECEJOINTE_v  }
         
+
 
 
 
