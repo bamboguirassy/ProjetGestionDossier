@@ -273,7 +273,7 @@ class PieceJointeController extends Controller {
     /**
      * Serve a file by forcing the download
      *
-     * @Route("/download/{filename}", name="download_file", requirements={"filename": ".+"})
+     * @Route("/download/{filename}", name="download_file")
      */
     public function downloadFileAction($file)
     {
