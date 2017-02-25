@@ -1,67 +1,56 @@
-    {% extends 'base.html.twig' %}
 
-    {% block  breadcrumb %}
-    <li>
-        <a href='{{ path('piecejointe_index') }}'>Revenir à la liste</a>
-    </li>
-    <li class="active">Formulaire de PieceJointe</li>
-        {% endblock %}
-
-    {% block  page_header %}
-    Formulaire
-    <small>
-        <i class="ace-icon fa fa-angle-double-right"></i>
-        Création de PieceJointe
-    </small>
-    {% endblock %}
-
-
-
-    {% block body %}
     <div class="row">
         <div class="col-xs-12">
 
-            {{ form_start(form,{'attr':{'class':'form-horizontal','role':'form','action':path('piecejointe_new')}}) }}                                    
+            {{ form_start(piecejointe_form,{'attr':{'class':'form-horizontal','role':'form','action':path('piecejointe_new')}}) }}                                    
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.libelle) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(piecejointe_form.libelle) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.libelle,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(piecejointe_form.libelle,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
 
                                     
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.description) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(piecejointe_form.description) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.description,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(piecejointe_form.description,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
 
                                     
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.fichier) }}</label>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(piecejointe_form.fichier) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.fichier,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(piecejointe_form.fichier,{'attr':{'id':'form-field','name':'pj'}}) }}
                         </span>
                     </div>
                 </div>                        
 
                                     
-                <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(form.dateAssociation) }}</label>
+                <div class="form-group" hidden>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(piecejointe_form.dateAssociation) }}</label>
                     <div class="col-sm-9">
                         <span class="input-icon input-icon-right">
-                            {{ form_widget(form.dateAssociation,{'attr':{'id':'form-field'}}) }}
+                            {{ form_widget(piecejointe_form.dateAssociation,{'attr':{'id':'form-field'}}) }}
                         </span>
                     </div>
                 </div>                        
 
-                        
+                                         
+                <div class="form-group" hidden>
+                    <label class="col-sm-3 control-label no-padding-right">{{ form_label(piecejointe_form.dossier) }}</label>
+                    <div class="col-sm-9">
+                        <span class="input-icon input-icon-right">
+                            {{ form_widget(piecejointe_form.dossier,{'attr':{'id':'form-field'}}) }}
+                        </span>
+                    </div>
+                </div>  
                 <div class="clearfix form-actions">
                     <div class="col-md-offset-3 col-md-9">
                         <button class="btn btn-info tooltip-info" data-rel="tooltip" data-placement="top"   title="enregistrer PieceJointe">
@@ -77,13 +66,10 @@
                     </div>
                 </div>
 
-                {{ form_end(form) }}
+                {{ form_end(piecejointe_form) }}
+              
 
             </div><!-- /.col -->
         </div><!-- /.row -->           
 
-                <div class="clearfix form-actions">
-    <div class="col-md-offset-3 col-md-9">
-    </div>
-</div>{% endblock %}
-        
+             

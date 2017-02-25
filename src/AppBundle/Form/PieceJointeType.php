@@ -17,7 +17,7 @@ class PieceJointeType extends AbstractType
         $builder
             ->add('libelle')
             ->add('description')
-            ->add('fichier')
+            ->add('fichier','file',array('label'=>'Fichier'))
             ->add('dateAssociation', 'datetime')
             ->add('dossier')
         ;

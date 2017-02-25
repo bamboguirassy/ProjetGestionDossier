@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\PieceJointe;
 use AppBundle\Form\PieceJointeType;
-
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 /**
  * PieceJointe controller.
  *
@@ -43,6 +45,20 @@ class PieceJointeController extends Controller {
         $form = $this->createForm('AppBundle\Form\PieceJointeType', $pieceJointe);
         $form->handleRequest($request);
         $dossier = $pieceJointe->getDossier();
+         $uploadedfiles=$pieceJointe->getFichier();
+         $doc=$pieceJointe->getLibelle().'.'.$uploadedfiles->guessExtension();
+         //verification de l'extension du document
+          $extension= $uploadedfiles->guessExtension();
+          $type=array('xlsx','pdf','docx','pptx');
+          if (!in_array($extension, $type)) {
+                throw $this->createNotFoundException('Ce type de document n\'est pas reconnu');
+            }
+
+         //$files=$request->files;
+         //$uploadedfiles=$files->get('pj');
+          $dir_doc = $this->container->getParameter('kernel.root_dir') . '/../web/upload/piecejointe';
+         $uploadedfiles->move($dir_doc,$doc);
+         $pieceJointe->setFichier($doc);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($pieceJointe);
@@ -87,9 +103,11 @@ class PieceJointeController extends Controller {
      */
     public function showAction(PieceJointe $pieceJointe) {
         $deleteForm = $this->createDeleteForm($pieceJointe);
-
+         
+         
         return $this->render('piecejointe/show.html.twig', array(
                     'pieceJointe' => $pieceJointe,
+                    
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -236,6 +254,58 @@ class PieceJointeController extends Controller {
                         ->setMethod('DELETE')
                         ->getForm()
         ;
+    }
+    
+     /**
+     * Affiche un document de la PieceJointe.
+     *
+     * @Route("/doc", name="affiche_piecejointe")
+     * @Method("GET")
+     */
+    public function loadDocs(PieceJointe $pieceJointe){
+           $em = $this->getDoctrine()->getManager();
+        $doc=$em->getRepository('AppBundle:PieceJointe')->findBy(array('id'=>$pieceJointe));
+         $chemin=$doc->getFichier();
+         return new BinaryFileResponse($chemin);
+         
+        
+    }
+    /**
+     * Serve a file by forcing the download
+     *
+     * @Route("/download/{filename}", name="download_file", requirements={"filename": ".+"})
+     */
+    public function downloadFileAction($file)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pieceJointes = $em->getRepository('AppBundle:PieceJointe')->find($file);
+
+        $filename=$pieceJointes->getFichier();
+        /**
+         * $basePath can be either exposed (typically inside web/)
+         * or "internal"
+         */
+        $basePath = $this->container->getParameter('kernel.root_dir').'/../web/upload/piecejointe';
+
+        $filePath = $basePath.'/'.$filename;
+
+        // check if file exists
+        $fs = new FileSystem();
+        if (!$fs->exists($filepath)) {
+            throw $this->createNotFoundException();
+        }
+
+        // prepare BinaryFileResponse
+        $response = new BinaryFileResponse($filePath);
+        $response->trustXSendfileTypeHeader();
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_INLINE,
+            $filename,
+            iconv('UTF-8', 'ASCII//TRANSLIT', $filename)
+        );
+
+        return $response;
     }
 
 }

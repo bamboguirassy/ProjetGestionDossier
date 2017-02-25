@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Dossier;
 use AppBundle\Form\DossierType;
+use AppBundle\Entity\PieceJointe;
 
 /**
  * Dossier controller.
@@ -109,7 +110,14 @@ class DossierController extends Controller {
                         . 'where ue1.entite=e and ue1.user=?1) ')
                 ->setParameter(1, $this->getUser())
                 ->getResult();
-
+        $piecejointe= new \AppBundle\Entity\PieceJointe();
+        $piecejointe->setDossier($dossier);
+         $today= new \DateTime();
+        
+        $piecejointe->setDateAssociation($today);
+       
+        $piecejointe_form=$this->createForm('AppBundle\Form\PieceJointeType', $piecejointe);
+        $pieceJointe=$em->getRepository('AppBundle:PieceJointe')->findBy(array('dossier'=>$dossier));
         return $this->render('dossier/show.html.twig', array(
                     'dossier' => $dossier,
                     'delete_form' => $deleteForm->createView(),
@@ -119,6 +127,8 @@ class DossierController extends Controller {
                     'commentaires' => $commentaires,
                     'traitementDossiers' => $traitementDossiers,
                     'users' => $users,
+                     'piecejointe_form'=>$piecejointe_form->createView(),
+                     'pieceJointe'=>$pieceJointe,
         ));
     }
 
