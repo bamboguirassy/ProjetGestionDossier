@@ -10,10 +10,12 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * 
      */
     public function indexAction(Request $request)
     {
-       return $this->redirectToRoute('user_show',array('id'=>  $this->getUser()->getId()));
+        return $this->render('default/index.html.twig', array(
+        ));
     }
 
 }
