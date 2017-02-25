@@ -61,6 +61,7 @@ class PieceJointeController extends Controller {
          $pieceJointe->setFichier($doc);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $pieceJointe->setUser($this->getUser());
             $em->persist($pieceJointe);
             $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
                             . 'where td.user=u and td.dossier=?1 ')
