@@ -273,7 +273,7 @@ class PieceJointeController extends Controller {
     /**
      * Serve a file by forcing the download
      *
-     * @Route("/download/{filename}", name="download_file")
+     * @Route("/download/{file}", name="download_file")
      */
     public function downloadFileAction($file)
     {
@@ -292,7 +292,7 @@ class PieceJointeController extends Controller {
 
         // check if file exists
         $fs = new FileSystem();
-        if (!$fs->exists($filepath)) {
+        if (!$fs->exists($filePath)) {
             throw $this->createNotFoundException();
         }
 
