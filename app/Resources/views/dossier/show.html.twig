@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block  breadcrumb %}
+      <script>
+                    function retournpiecejointe(pj) {
+
+                    document.getElementById('pj').value =pj;
+                   
+                    }
+                    </script>
     <li>
         <a href='{{ path('dossier_index') }}'>Revenir à la liste</a>
     </li>
@@ -346,13 +353,18 @@
 
                                         <div class="widget-body">
                                             <div class="widget-main no-padding">
-                                                <table class="table table-bordered table-striped">
+                                                <table id='dynamic-table' class="table table-bordered table-striped">
                                                     <thead class="thin-border-bottom">
                                                         <tr>
+                                                            
                                                             <th>
                                                                 <i class="ace-icon fa fa-caret-right blue"></i>Libelle
                                                             </th>
-
+                                                            <th>Ajoutée par</th>
+                                                            <th>identif</th>
+                                                             <th>
+                                                                <i class="ace-icon fa fa-caret-right blue"></i>Date ajout
+                                                             </th>
                                                             <th>
                                                                 <i class="ace-icon fa fa-caret-right blue"></i>Action
                                                             </th>
@@ -365,36 +377,21 @@
                                                         {%for pieceJointe in pieceJointe%}
                                                             <tr>
                                                                 <td>{{pieceJointe.libelle}}</td>
-
+                                                                <td>{{pieceJointe.dateassociation|date('d/m/Y H:i:s')}}</td>
+                                                                <td>{{pieceJointe.dateassociation|date('d/m/Y H:i:s')}}</td>
+                                                                <td>{{pieceJointe.dateassociation|date('d/m/Y H:i:s')}}</td>
                                                                 <td>
                                                                     <div class="hidden-sm hidden-xs action-buttons">                            
                                                                         <a class="blue" href="{{ path('download_file', { 'file': pieceJointe.id }) }}">
                                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                                         </a>
-                                                                        <a class="green" href="{{ path('piecejointe_edit', { 'id': pieceJointe.id }) }}">
-                                                                            <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                                        </a>
+                                                                           
+                                                                            <a class="red" href="#modal-alertsuppresion" role="button" onclick= "retournpiecejointe({{pieceJointe.id}});" data-toggle="modal">
+																	<i class="ace-icon fa fa-trash-o bigger-130"></i>
+																</a>
+                                                                       
                                                                     </div>
-                                                                    <div class="hidden-md hidden-lg">
-                                                                        <div class="inline pos-rel">
-                                                                            <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                                                <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-                                                                            </button>
-                                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
-                                                                                    <a href="{{ path('piecejointe_show', { 'id': pieceJointe.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir piecejointe">
-                                                                                        <span class="blue">
-                                                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                                        </span>   
-                                                                                    </a>
-                                                                                </li>                                    <li>
-                                                                                    <a href="{{ path('piecejointe_edit', { 'id': pieceJointe.id }) }}" class="tooltip-success" data-rel="tooltip"  title="Modifier piecejointe">
-                                                                                        <span class="green">
-                                                                                            <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                                                        </span>
-                                                                                    </a>
-                                                                                </li>                                </ul>
-                                                                        </div>
-                                                                    </div>
+                                                           
                                                                 </td>
 
                                                             </tr>
@@ -535,9 +532,43 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- PAGE CONTENT ENDS -->
+    </div>
+    {#   fin modal ajout traitement utilisateur#}
+     {#    modal alert suppression#}
+    <div id="modal-alertsuppresion" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header no-padding">
+                    <div class="table-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                        </button>
+                       Suppression pièce jointe
+                    </div>
+                </div>
+                <form method='POST' action="{{path('piecejointe_supprime')}}">
+                <div class="modal-body">
+                    <span class="danger">
+                  Etes vous sûr de vouloir supprimer cette pièce jointe?
+                    </span>
+                    <input type='text' name='piecejointe' id='pj'/>
+                </div>
 
-
+                <div class="modal-footer no-margin-top">
+                    <button class="btn btn-sm pull-left" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-danger pull-right">
+                        <i class="ace-icon fa fa-trash"></i>
+                        Supprimer
+                    </button>
+                </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    {#   fin modal alert#}
     {#    modal modification dossier #}
     <div id="modal-modification-dossier" class="modal fade" tabindex="-1">
         <div class="modal-dialog">

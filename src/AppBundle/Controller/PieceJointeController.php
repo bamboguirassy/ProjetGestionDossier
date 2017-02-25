@@ -163,17 +163,17 @@ class PieceJointeController extends Controller {
     /**
      * Supprime une occurence de PieceJointe.
      *
-     * @Route("/{id}", name="piecejointe_delete")
-     * @Method("DELETE")
+     * @Route("/supprimerpj", name="piecejointe_supprime")
+     * @Method("POST")
      */
-    public function deleteAction(Request $request, PieceJointe $pieceJointe) {
-        $form = $this->createDeleteForm($pieceJointe);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($pieceJointe);
+    public function deleteAction(Request $request) {
+         $em = $this->getDoctrine()->getManager();
+           $idpiecejointe=$request->get('piecejointe');
+        $pieceJointe=$em->getRepository('AppBundle:PieceJointe')->find($idpiecejointe);
+        
             $dossier = $pieceJointe->getDossier();
+            
+            $em->remove($pieceJointe);
             $users_concernes = $em->createQuery('select u from AppBundle:User u, AppBundle:TraitementDossier td '
                             . 'where td.user=u and td.dossier=?1 ')
                     ->setParameter(1, $dossier)
@@ -197,9 +197,9 @@ class PieceJointeController extends Controller {
             $em->flush();
             $request->getSession()->getFlashBag()
                     ->set('dangers', 'Suppression reussie !!!');
-        }
+        
 
-        return $this->redirectToRoute('piecejointe_index');
+        return $this->redirectToRoute('dossier_show',array('id'=>$dossier->getId()));
     }
 
     /**
@@ -241,20 +241,20 @@ class PieceJointeController extends Controller {
         return $this->redirectToRoute('piecejointe_index');
     }
 
-    /**
-     * Crée un formulaire de suppression de PieceJointe.
-     *
-     * @param PieceJointe $pieceJointe The PieceJointe entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(PieceJointe $pieceJointe) {
-        return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('piecejointe_delete', array('id' => $pieceJointe->getId())))
-                        ->setMethod('DELETE')
-                        ->getForm()
-        ;
-    }
+//    /**
+//     * Crée un formulaire de suppression de PieceJointe.
+//     *
+//     * @param PieceJointe $pieceJointe The PieceJointe entity
+//     *
+//     * @return \Symfony\Component\Form\Form The form
+//     */
+//    private function createDeleteForm(PieceJointe $pieceJointe) {
+//        return $this->createFormBuilder()
+//                        ->setAction($this->generateUrl('piecejointe_delete', array('id' => $pieceJointe->getId())))
+//                        ->setMethod('DELETE')
+//                        ->getForm()
+//        ;
+//    }
     
      /**
      * Affiche un document de la PieceJointe.
