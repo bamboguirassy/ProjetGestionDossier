@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * PieceJointe
  *
- * @ORM\Table(name="piece_jointe", indexes={@ORM\Index(name="fk_piece_jointe_dossier1", columns={"dossier_id"})})
+ * @ORM\Table(name="piece_jointe", indexes={@ORM\Index(name="fk_piece_jointe_dossier1", columns={"dossier_id"}), @ORM\Index(name="user", columns={"user"})})
  * @ORM\Entity
  */
 class PieceJointe
@@ -48,6 +48,16 @@ class PieceJointe
      * @ORM\Column(name="date_association", type="datetime", nullable=true)
      */
     private $dateAssociation;
+
+    /**
+     * @var \User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
     /**
      * @var \Dossier
@@ -164,6 +174,29 @@ class PieceJointe
     }
 
     /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return PieceJointe
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set dossier
      *
      * @param \AppBundle\Entity\Dossier $dossier
@@ -184,5 +217,9 @@ class PieceJointe
     public function getDossier()
     {
         return $this->dossier;
+    }
+    
+    public function __toString() {
+        return $this->libelle ;
     }
 }
