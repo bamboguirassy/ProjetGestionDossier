@@ -324,6 +324,10 @@
                             </div>
 
                             <div id="dropdown13" class="tab-pane">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 471d24ad86c03fff282410e40ae254f822325223
 
                                 <div class="tab-content">
 
@@ -334,6 +338,72 @@
                                                 <a href="#modal-piecejointe" role="button"  data-toggle="modal">Nouveau</a>
                                             </h4>
 
+<<<<<<< HEAD
+=======
+=======
+                                
+								<div class="tab-content">
+								
+										<div class="widget-box transparent">
+											<div class="widget-header widget-header-flat">
+												<h4 class="widget-title lighter">
+													<i class="ace-icon fa fa-plus-circle"></i>
+                                                                                                        <a href="#modal-piecejointe" role="button"  data-toggle="modal">Nouveau</a>
+												</h4>
+                                                                                         
+                                </a>
+                                
+
+												<div class="widget-toolbar">
+													<a href="#" data-action="collapse">
+														<i class="ace-icon fa fa-chevron-up"></i>
+													</a>
+												</div>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main no-padding">
+													<table class="table table-bordered table-striped">
+														<thead class="thin-border-bottom">
+															<tr>
+																<th>
+																	<i class="ace-icon fa fa-caret-right blue"></i>Libelle
+																</th>
+
+																<th>
+																	<i class="ace-icon fa fa-caret-right blue"></i>Action
+																</th>
+
+															</tr>
+														</thead>
+
+														<tbody>
+                                                                                                                    
+                                                                                                                    {%for pieceJointe in pieceJointe%}
+															<tr>
+																<td>{{pieceJointe.libelle}}</td>
+
+																 <td>
+                        <div class="hidden-sm hidden-xs action-buttons">                            
+                                <a class="blue" href="{{ path('download_file', { 'file': pieceJointe.id }) }}">
+                                    <i class="ace-icon fa fa-search-plus bigger-130"></i>
+                                </a>
+                                                                                        <a class="green" href="{{ path('piecejointe_edit', { 'id': pieceJointe.id }) }}">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                                                    </div>
+                        <div class="hidden-md hidden-lg">
+                            <div class="inline pos-rel">
+                                <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">                                    <li>
+                                                                                    <a href="{{ path('piecejointe_show', { 'id': pieceJointe.id }) }}" class="tooltip-info" data-rel="tooltip"  title="Voir piecejointe">
+                                                <span class="blue">
+                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                </span>   
+>>>>>>> 6e8a6e1e0cb8d390a421dd848b2c4e66568ddbab
+>>>>>>> 471d24ad86c03fff282410e40ae254f822325223
                                             </a>
 
 
@@ -368,7 +438,11 @@
 
                                                                 <td>
                                                                     <div class="hidden-sm hidden-xs action-buttons">                            
+<<<<<<< HEAD
                                                                         <a class="blue" href="{{ path('download_file', { 'file': pieceJointe.id }) }}">
+=======
+                                                                        <a class="blue" href="{{ path('download_file', { 'filename': pieceJointe.id }) }}">
+>>>>>>> 471d24ad86c03fff282410e40ae254f822325223
                                                                             <i class="ace-icon fa fa-search-plus bigger-130"></i>
                                                                         </a>
                                                                         <a class="green" href="{{ path('piecejointe_edit', { 'id': pieceJointe.id }) }}">
