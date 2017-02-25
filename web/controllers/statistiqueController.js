@@ -6,5 +6,12 @@
 
 angular.module('GestionDossier')
         .controller('StatistiqueController', function ($http, $scope) {
-                alert('Bienvenue sur la page de statistique');
+            $scope.entites = [];
+            $scope.entiteSelectionnee = {'nom': ''};
+            $http.get(Routing.generate('user_entite_statistique'))
+                    .success(function (data) {
+                        $scope.entites = JSON.parse(data);
+                    }).error(function () {
+                alert('Erreur survenue lors de la recuperation de la liste des entites');
+            });
         });
