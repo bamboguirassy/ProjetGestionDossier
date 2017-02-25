@@ -49,7 +49,7 @@ class PieceJointeController extends Controller {
          $doc=$pieceJointe->getLibelle().'.'.$uploadedfiles->guessExtension();
          //verification de l'extension du document
           $extension= $uploadedfiles->guessExtension();
-          $type=array('xlsx','pdf','docx','pptx');
+          $type=array('xlsx','pdf','docx','pptx','jpeg','png','jpg');
           if (!in_array($extension, $type)) {
                 throw $this->createNotFoundException('Ce type de document n\'est pas reconnu');
             }
