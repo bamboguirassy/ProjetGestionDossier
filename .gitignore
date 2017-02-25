@@ -1,2 +1,4 @@
 /app/cache/*
 app/logs/*
+app/config/parameter.yml
+nbproject/private/private.xml
