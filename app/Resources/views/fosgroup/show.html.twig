@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="box-body">
                 <!-- Type de menu -->
-                
+
 
 
                 {% for role in entity.roles %}
@@ -19,7 +19,7 @@
                     {% if entite not in droits %} <!-- Teste sur le menu Parametrage -->
                         {% set parametres = parametres|merge([entite]) %} <!-- Remplissage du tableau menu paramétrage -->
 
-                    
+
                     {% endif %}
                 {% endfor %}
 
@@ -96,17 +96,23 @@
                     {% endif %}
 
                     <div class="col-md-12">
-                    <div class="box-footer">
-                        <a href="{{ path('fosgroup') }}"  class="btn btn-default" title="Liste des Groupes d'Utilisateurs de LMDPro II"><i class="fa fa-reply"></i> Retour</a>&nbsp;
-                        <div style="float: right">
-                            <a href="{{ path('fosgroup_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o "></i> Modifier</a>&nbsp;
-                            <a href="../group/{{ entity.name }}/delete" class="btn btn-danger"> <i class="fa fa-trash"></i> Supprimer</a>
+                        <div class="box-footer">
+                            {% if is_granted('ROLE_FOSGROUP_L') %}
+                                <a href="{{ path('fosgroup') }}"  class="btn btn-default" title="Liste des Groupes d'Utilisateurs de LMDPro II"><i class="fa fa-reply"></i> Retour</a>&nbsp;
+                            {% endif %}
+                            <div style="float: right">
+                                {% if is_granted('ROLE_FOSGROUP_M') %}
+                                    <a href="{{ path('fosgroup_edit', { 'id': entity.id }) }}" class="btn btn-warning"><i class="fa fa-pencil-square-o "></i> Modifier</a>&nbsp;
+                                {% endif %}
+                                {% if is_granted('ROLE_FOSGROUP_S') %}
+                                    <a href="{{ path('fosgroup_delete',{'id':entity.id}) }}" class="btn btn-danger"> <i class="fa fa-trash"></i> Supprimer</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
-                                
-                
+
+
             </div>
         </div>
     </div>

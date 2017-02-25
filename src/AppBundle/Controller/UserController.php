@@ -97,7 +97,7 @@ class UserController extends Controller {
                 ->getResult();
         $mes_entites = $em->createQuery('select e from AppBundle:Entite e, AppBundle:UserEntite ee '
                         . 'where ee.entite=e and ee.user =?1 ')
-                ->setParameter(1, $this->getUser())
+                ->setParameter(1, $user)
                 ->getResult();
 
 

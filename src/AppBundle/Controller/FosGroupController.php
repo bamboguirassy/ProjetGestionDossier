@@ -228,14 +228,10 @@ class FosGroupController extends Controller {
     /**
      * Deletes a FosGroup entity.
      *
-     * @Route("/{id}", name="fosgroup_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/del", name="fosgroup_delete")
      */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
+    public function deleteAction( $id) {
+     
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AppBundle:FosGroup')->find($id);
 
@@ -245,7 +241,7 @@ class FosGroupController extends Controller {
 
             $em->remove($entity);
             $em->flush();
-        }
+      
 
         return $this->redirect($this->generateUrl('fosgroup'));
     }

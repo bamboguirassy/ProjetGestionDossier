@@ -2,7 +2,9 @@
 
 {% block body -%}
     <div class="pull-left">
-        <a href="{{ path('fosgroup_new') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Nouveau</a>
+        {% if is_granted('ROLE_FOSGROUP_A') %}
+            <a href="{{ path('fosgroup_new') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Nouveau</a>
+        {% endif %}
     </div>
     <div class="box-body">
         <table id="example" class="table table-bordered table-striped table-condensed table-hover responsive-utilities jambo_table">
@@ -30,8 +32,13 @@
                             {{ entity.name }}
                         </td>
                         <td>
-                            <a href="{{ path('fosgroup_show', { 'id': entity.id }) }}" class='skin-blue'><i title='Visualiser' class="btn btn-primary fa fa-eye "></i></a>
-                            <a href="{{ path('fosgroup_edit', { 'id': entity.id }) }}"><i title='Modifier'class="btn btn-warning fa fa-pencil-square-o "></i></a>
+                            {% if is_granted('ROLE_FOSGROUP_V') %}
+                                <a href="{{ path('fosgroup_show', { 'id': entity.id }) }}" class='skin-blue'><i title='Visualiser' class="btn btn-primary fa fa-eye "></i></a>
+                                {% endif %}
+                                {% if is_granted('ROLE_FOSGROUP_M') %}
+                                <a href="{{ path('fosgroup_edit', { 'id': entity.id }) }}"><i title='Modifier'class="btn btn-warning fa fa-pencil-square-o "></i></a>
+                                {% endif %}
+
                         </td>
 
                     </tr>
